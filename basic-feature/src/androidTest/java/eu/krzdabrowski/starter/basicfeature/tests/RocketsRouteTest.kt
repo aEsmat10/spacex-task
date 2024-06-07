@@ -3,6 +3,7 @@ package eu.krzdabrowski.starter.basicfeature.tests
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.navigation.NavHostController
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import eu.krzdabrowski.starter.basicfeature.data.generateTestRocketsFromDomain
@@ -30,6 +31,7 @@ class RocketsRouteTest {
         composeTestRule.activity.setContent {
             RocketsRoute(
                 viewModel = composeTestRule.getHiltTestViewModel(),
+                navController = NavHostController(composeTestRule.activity)
             )
         }
     }

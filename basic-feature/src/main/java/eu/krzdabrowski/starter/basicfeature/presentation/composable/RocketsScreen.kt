@@ -75,7 +75,7 @@ internal fun RocketsScreen(
                 RocketsAvailableContent(
                     snackbarHostState = snackbarHostState,
                     uiState = uiState,
-                    onRocketClick = { onIntent(RocketClicked(it)) },
+                    onRocketClick = { onIntent(RocketClicked(it.name)) },
                 )
             } else {
                 RocketsNotAvailableContent(
