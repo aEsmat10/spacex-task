@@ -28,6 +28,9 @@ data class RocketResponse(
 
     @SerialName("flickr_images")
     val imageUrls: List<String> = emptyList(),
+
+    @SerialName("country")
+    val country: String = "",
 ) {
     @Serializable
     data class Height(

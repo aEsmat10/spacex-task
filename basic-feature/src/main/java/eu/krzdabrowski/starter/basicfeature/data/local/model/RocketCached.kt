@@ -29,4 +29,7 @@ data class RocketCached(
 
     @ColumnInfo(name = "image_url")
     val imageUrl: String,
+
+    @ColumnInfo(name = "country")
+    val country: String,
 )

@@ -17,7 +17,7 @@ fun NavigationHost(
         modifier = modifier,
     ) {
         factories.forEach {
-            it.create(this)
+            it.create(this, navController)
         }
     }
 }

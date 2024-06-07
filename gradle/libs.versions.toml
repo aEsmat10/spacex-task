@@ -35,6 +35,8 @@ test-android-compose-ui-test        = "1.6.5"
 test-android-junit                  = "1.1.5"
 test-android-profile-installer      = "1.3.1"
 test-android-runner                 = "1.5.2"
+ui-tooling-preview-android = "1.6.7"
+ui-tooling = "1.6.7"
 
 
 [plugins]
@@ -91,6 +93,8 @@ test-android-runner                 = { group = "androidx.test", name = "runner"
 
 # debug libraries
 debug-compose-manifest              = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "test-android-compose-ui-test" }
+ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "ui-tooling-preview-android" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "ui-tooling" }
 
 
 [bundles]

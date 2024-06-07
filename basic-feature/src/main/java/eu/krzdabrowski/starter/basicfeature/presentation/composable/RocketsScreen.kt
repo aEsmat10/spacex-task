@@ -19,6 +19,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import eu.krzdabrowski.starter.basicfeature.R
 import eu.krzdabrowski.starter.basicfeature.presentation.RocketsEvent
 import eu.krzdabrowski.starter.basicfeature.presentation.RocketsEvent.OpenWebBrowserWithDetails
@@ -27,14 +29,18 @@ import eu.krzdabrowski.starter.basicfeature.presentation.RocketsIntent.RefreshRo
 import eu.krzdabrowski.starter.basicfeature.presentation.RocketsIntent.RocketClicked
 import eu.krzdabrowski.starter.basicfeature.presentation.RocketsUiState
 import eu.krzdabrowski.starter.basicfeature.presentation.RocketsViewModel
+import eu.krzdabrowski.starter.basicfeature.presentation.model.RocketDisplayable
+import eu.krzdabrowski.starter.core.navigation.NavigationDestination
+import eu.krzdabrowski.starter.core.navigation.NavigationFactory
 import eu.krzdabrowski.starter.core.utils.collectWithLifecycle
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun RocketsRoute(
     viewModel: RocketsViewModel = hiltViewModel(),
+    navController: NavHostController,
 ) {
-    HandleEvents(viewModel.getEvents())
+    HandleEvents(viewModel.getEvents(), navController)
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     RocketsScreen(
@@ -106,13 +112,17 @@ private fun HandlePullToRefresh(
 }
 
 @Composable
-private fun HandleEvents(events: Flow<RocketsEvent>) {
+private fun HandleEvents(events: Flow<RocketsEvent>, navController: NavHostController) {
     val uriHandler = LocalUriHandler.current
 
     events.collectWithLifecycle {
         when (it) {
             is OpenWebBrowserWithDetails -> {
                 uriHandler.openUri(it.uri)
+            }
+
+            is RocketsEvent.OpenRocketDetailsScreen -> {
+                navController.navigate("rocketsDetails/${it.rocketName}")
             }
         }
     }
@@ -122,7 +132,7 @@ private fun HandleEvents(events: Flow<RocketsEvent>) {
 private fun RocketsAvailableContent(
     snackbarHostState: SnackbarHostState,
     uiState: RocketsUiState,
-    onRocketClick: (String) -> Unit,
+    onRocketClick: (RocketDisplayable) -> Unit,
 ) {
     if (uiState.isError) {
         val errorMessage = stringResource(R.string.rockets_error_refreshing)
